@@ -121,13 +121,7 @@ for (const chromeNamespaceRef of chromeNamespaceRefs) {
     const fullReferenceNode = chromeNamespaceRef.getAncestors().find(a => chromeNamespaceRegex.test(a.getText()));
 
     // get the full reference path
-    const [, fileName, toImport] =
-        chromeNamespaceRegex.exec(
-            chromeNamespaceRef
-                .getAncestors()
-                .map(a => a.getText())
-                .find(a => chromeNamespaceRegex.test(a)) ?? '',
-        ) ?? [];
+    const [, fileName, toImport] = chromeNamespaceRegex.exec(fullReferenceNode?.getText() ?? '') ?? [];
 
     if (!fileName || !toImport) continue;
 
@@ -144,7 +138,7 @@ for (const chromeNamespaceRef of chromeNamespaceRefs) {
             .getImportDeclaration(i => i.getNamedImports().some(n => n.getName() === toImport))
     ) {
         chromeNamespaceRefFile.addImportDeclaration({
-            moduleSpecifier: isNested ? `../${fileName}` : `./${fileName}`,
+            moduleSpecifier: `${isNested ? '../' : './'}${fileName}`,
             namedImports: [toImport],
         });
     }
