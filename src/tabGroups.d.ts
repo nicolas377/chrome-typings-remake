@@ -45,11 +45,11 @@ export interface UpdateProperties {
 export function get(groupId: number, callback: (group: TabGroup) => void): void;
 export function get(groupId: number): Promise<TabGroup>;
 export function move(groupId: number, moveProperties: MoveProperties): Promise<TabGroup>;
-export function move(groupId: number, moveProperties: MoveProperties, callback?: (group: TabGroup) => void): void;
+export function move(groupId: number, moveProperties: MoveProperties, callback: (group: TabGroup) => void): void;
 export function query(queryInfo: QueryInfo, callback: (result: TabGroup[]) => void): void;
 export function query(queryInfo: QueryInfo): Promise<TabGroup[]>;
 export function update(groupId: number, updateProperties: UpdateProperties): Promise<TabGroup>;
-export function update(groupId: number, updateProperties: UpdateProperties, callback?: (group: TabGroup) => void): void;
+export function update(groupId: number, updateProperties: UpdateProperties, callback: (group: TabGroup) => void): void;
 export interface TabGroupCreatedEvent extends Event<(group: TabGroup) => void> {}
 
 export interface TabGroupMovedEvent extends Event<(group: TabGroup) => void> {}

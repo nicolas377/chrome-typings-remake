@@ -6,3 +6,4 @@ export interface MostVisitedURL {
 }
 
 export function get(callback: (data: MostVisitedURL[]) => void): void;
+export function get(): Promise<MostVisitedURL[]>;

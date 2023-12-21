@@ -44,11 +44,11 @@ export interface ConnectionInfo {
      * This field may be omitted or inaccurate if a non-standard bitrate is in use, or if an error occurred while querying the underlying device. */
     bitrate?: number | undefined;
     /** Optional. See ConnectionOptions.dataBits. This field may be omitted if an error occurred while querying the underlying device. */
-    dataBits?: typeof DataBits[keyof typeof DataBits] | undefined;
+    dataBits?: (typeof DataBits)[keyof typeof DataBits] | undefined;
     /** Optional. See ConnectionOptions.parityBit. This field may be omitted if an error occurred while querying the underlying device. */
-    parityBit?: typeof ParityBit[keyof typeof ParityBit] | undefined;
+    parityBit?: (typeof ParityBit)[keyof typeof ParityBit] | undefined;
     /** Optional. See ConnectionOptions.stopBits. This field may be omitted if an error occurred while querying the underlying device. */
-    stopBits?: typeof StopBits[keyof typeof StopBits] | undefined;
+    stopBits?: (typeof StopBits)[keyof typeof StopBits] | undefined;
     /** Optional. Flag indicating whether or not to enable RTS/CTS hardware flow control. Defaults to false. */
     ctsFlowControl?: boolean | undefined;
 }
@@ -68,11 +68,11 @@ export interface ConnectionOptions {
      * 9600 will be passed by default. */
     bitrate?: number | undefined;
     /** Optional. "eight" will be passed by default. */
-    dataBits?: typeof DataBits[keyof typeof DataBits] | undefined;
+    dataBits?: (typeof DataBits)[keyof typeof DataBits] | undefined;
     /** Optional. "no" will be passed by default. */
-    parityBit?: typeof ParityBit[keyof typeof ParityBit] | undefined;
+    parityBit?: (typeof ParityBit)[keyof typeof ParityBit] | undefined;
     /** Optional. "one" will be passed by default. */
-    stopBits?: typeof StopBits[keyof typeof StopBits] | undefined;
+    stopBits?: (typeof StopBits)[keyof typeof StopBits] | undefined;
     /** Optional. Flag indicating whether or not to enable RTS/CTS hardware flow control. Defaults to false. */
     ctsFlowControl?: boolean | undefined;
     /** Optional. The maximum amount of time (in milliseconds) to wait for new data before raising an onReceiveError event with a "timeout" error.

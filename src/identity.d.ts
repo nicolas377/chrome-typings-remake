@@ -66,12 +66,30 @@ export interface WebAuthFlowOptions {
 
 export interface SignInChangeEvent extends Event<(account: AccountInfo, signedIn: boolean) => void> {}
 
+export interface GetAuthTokenResult {
+    /**
+     * Optional.
+     * A list of OAuth2 scopes granted to the extension.
+     */
+    grantedScopes?: string[];
+    /**
+     * Optional.
+     * The specific token associated with the request.
+     */
+    token?: string;
+}
+
+export function clearAllCachedAuthTokens(): Promise<void>;
 export function clearAllCachedAuthTokens(callback: () => void): void;
+export function getAccounts(): Promise<AccountInfo[]>;
 export function getAccounts(callback: (accounts: AccountInfo[]) => void): void;
-export function getAuthToken(details: TokenDetails, callback?: (token: string) => void): void;
+export function getAuthToken(details: TokenDetails): Promise<GetAuthTokenResult>;
+export function getAuthToken(details: TokenDetails, callback: (token?: string, grantedScopes?: string[]) => void): void;
 export function getProfileUserInfo(callback: (userInfo: UserInfo) => void): void;
 export function getProfileUserInfo(details: ProfileDetails, callback: (userInfo: UserInfo) => void): void;
-export function removeCachedAuthToken(details: TokenInformation, callback?: () => void): void;
+export function getProfileUserInfo(details: ProfileDetails): Promise<UserInfo>;
+export function removeCachedAuthToken(details: TokenInformation): Promise<void>;
+export function removeCachedAuthToken(details: TokenInformation, callback: () => void): void;
 export function launchWebAuthFlow(details: WebAuthFlowOptions, callback: (responseUrl?: string) => void): void;
 export function launchWebAuthFlow(details: WebAuthFlowOptions): Promise<string | undefined>;
 export function getRedirectURL(path?: string): string;

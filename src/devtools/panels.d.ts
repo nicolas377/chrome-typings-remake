@@ -45,11 +45,14 @@ export interface ElementsPanel {
      * Creates a pane within panel's sidebar.
      * @param title Text that is displayed in sidebar caption.
      * @param callback A callback invoked when the sidebar is created.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function( ExtensionSidebarPane result) {...};
-     * Parameter result: An ExtensionSidebarPane object for created sidebar pane.
      */
-    createSidebarPane(title: string, callback?: (result: ExtensionSidebarPane) => void): void;
+    createSidebarPane(
+        title: string,
+        callback?: (
+            /** An ExtensionSidebarPane object for created sidebar pane */
+            result: ExtensionSidebarPane,
+        ) => void,
+    ): void;
     /** Fired when an object is selected in the panel. */
     onSelectionChanged: SelectionChangedEvent;
 }
@@ -59,11 +62,14 @@ export interface SourcesPanel {
      * Creates a pane within panel's sidebar.
      * @param title Text that is displayed in sidebar caption.
      * @param callback A callback invoked when the sidebar is created.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function( ExtensionSidebarPane result) {...};
-     * Parameter result: An ExtensionSidebarPane object for created sidebar pane.
      */
-    createSidebarPane(title: string, callback?: (result: ExtensionSidebarPane) => void): void;
+    createSidebarPane(
+        title: string,
+        callback?: (
+            /** An ExtensionSidebarPane object for created sidebar pane. */
+            result: ExtensionSidebarPane,
+        ) => void,
+    ): void;
     /** Fired when an object is selected in the panel. */
     onSelectionChanged: SelectionChangedEvent;
 }
@@ -83,16 +89,12 @@ export interface ExtensionSidebarPane {
      * @param expression An expression to be evaluated in context of the inspected page. JavaScript objects and DOM nodes are displayed in an expandable tree similar to the console/watch.
      * @param rootTitle An optional title for the root of the expression tree.
      * @param callback A callback invoked after the sidebar pane is updated with the expression evaluation results.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     setExpression(expression: string, rootTitle?: string, callback?: () => void): void;
     /**
      * Sets an expression that is evaluated within the inspected page. The result is displayed in the sidebar pane.
      * @param expression An expression to be evaluated in context of the inspected page. JavaScript objects and DOM nodes are displayed in an expandable tree similar to the console/watch.
      * @param callback A callback invoked after the sidebar pane is updated with the expression evaluation results.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     setExpression(expression: string, callback?: () => void): void;
     /**
@@ -100,16 +102,12 @@ export interface ExtensionSidebarPane {
      * @param jsonObject An object to be displayed in context of the inspected page. Evaluated in the context of the caller (API client).
      * @param rootTitle An optional title for the root of the expression tree.
      * @param callback A callback invoked after the sidebar is updated with the object.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     setObject(jsonObject: Object, rootTitle?: string, callback?: () => void): void;
     /**
      * Sets a JSON-compliant object to be displayed in the sidebar pane.
      * @param jsonObject An object to be displayed in context of the inspected page. Evaluated in the context of the caller (API client).
      * @param callback A callback invoked after the sidebar is updated with the object.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     setObject(jsonObject: Object, callback?: () => void): void;
     /**
@@ -132,5 +130,11 @@ export function create(
     callback?: (panel: ExtensionPanel) => void,
 ): void;
 export function setOpenResourceHandler(callback?: (resource: inspectedWindow.Resource) => void): void;
-export function openResource(url: string, lineNumber: number, callback: () => void): void;
+export function openResource(url: string, lineNumber: number, callback?: () => void): void;
+export function openResource(
+    url: string,
+    lineNumber: number,
+    columnNumber: number,
+    callback?: (response: unknown) => unknown,
+): void;
 export var themeName: 'default' | 'dark';

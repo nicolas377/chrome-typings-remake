@@ -63,7 +63,7 @@ export interface DisplayMode {
     /**
      * @deprecated Deprecated since Chrome 70. Use `displayZoomFactor`
      * @description The display mode UI scale factor.
-     **/
+     */
     uiScale: number;
 
     /** The display mode device scale factor. */
@@ -92,7 +92,7 @@ export interface DisplayLayout {
      * This will be ignored for the root.
      * @see enum
      */
-    position: typeof DisplayPosition[keyof typeof DisplayPosition];
+    position: (typeof DisplayPosition)[keyof typeof DisplayPosition];
     /** The offset of the display along the connected edge. 0 indicates that the topmost or leftmost corners are aligned. */
     offset: number;
 }
@@ -117,9 +117,9 @@ export interface DisplayPropertiesInfo {
      * This is only valid for the primary display.
      * If provided, mirroringSourceId must not be provided and other properties may not apply.
      * This is has no effect if not provided.
-     * @see(See `enableUnifiedDesktop` for details).
+     * @see `enableUnifiedDesktop` for details
      * @since Chrome 59
-     * */
+     */
     isUnified?: boolean | undefined;
 
     /**
@@ -170,7 +170,7 @@ export interface DisplayPropertiesInfo {
 
     /**
      * If set, updates the display's logical bounds origin along y-axis.
-     * @see[See documentation for boundsOriginX parameter.]
+     * @see boundsOriginX
      */
     boundsOriginY?: number | undefined;
 
@@ -194,7 +194,7 @@ export interface DisplayPropertiesInfo {
 export interface DisplayInfoFlags {
     /**
      * If set to true, only a single DisplayUnitInfo will be returned by getInfo when in unified desktop mode.
-     * @see[enableUnifiedDesktop]
+     * @see enableUnifiedDesktop
      * @default false
      */
     singleUnified?: boolean | undefined;
@@ -273,7 +273,7 @@ export interface DisplayInfo {
     /**
      * The ratio between the display's current and default zoom.
      * For example, value 1 is equivalent to 100% zoom, and value 1.5 is equivalent to 150% zoom.
-     * */
+     */
     displayZoomFactor: number;
 }
 
@@ -304,9 +304,9 @@ export function getInfo(flags: DisplayInfoFlags): Promise<DisplayInfo[]>;
 export function getDisplayLayout(callback: (layouts: DisplayLayout[]) => void): void;
 export function getDisplayLayout(): Promise<DisplayLayout[]>;
 export function setDisplayProperties(id: string, info: DisplayPropertiesInfo): Promise<void>;
-export function setDisplayProperties(id: string, info: DisplayPropertiesInfo, callback?: () => void): void;
+export function setDisplayProperties(id: string, info: DisplayPropertiesInfo, callback: () => void): void;
 export function setDisplayLayout(layouts: DisplayLayout[]): Promise<void>;
-export function setDisplayLayout(layouts: DisplayLayout[], callback?: () => void): void;
+export function setDisplayLayout(layouts: DisplayLayout[], callback: () => void): void;
 export function enableUnifiedDesktop(enabled: boolean): void;
 export function overscanCalibrationStart(id: string): void;
 export function overscanCalibrationAdjust(id: string, delta: Insets): void;

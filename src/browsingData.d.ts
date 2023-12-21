@@ -52,6 +52,8 @@ export interface DataTypeSet {
     downloads?: boolean | undefined;
     /** Optional. The browser's cache. Note: when removing data, this clears the entire cache: it is not limited to the range you specify.  */
     cache?: boolean | undefined;
+    /** Optional. The browser's cacheStorage.  */
+    cacheStorage?: boolean | undefined;
     /** Optional. Websites' appcaches.  */
     appcache?: boolean | undefined;
     /** Optional. Websites' file systems.  */
@@ -88,32 +90,32 @@ export interface SettingsResult {
 export function settings(): Promise<SettingsResult>;
 export function settings(callback: (result: SettingsResult) => void): void;
 export function removePluginData(options: RemovalOptions): Promise<void>;
-export function removePluginData(options: RemovalOptions, callback?: () => void): void;
+export function removePluginData(options: RemovalOptions, callback: () => void): void;
 export function removeServiceWorkers(options: RemovalOptions): Promise<void>;
-export function removeServiceWorkers(options: RemovalOptions, callback?: () => void): void;
+export function removeServiceWorkers(options: RemovalOptions, callback: () => void): void;
 export function removeFormData(options: RemovalOptions): Promise<void>;
-export function removeFormData(options: RemovalOptions, callback?: () => void): void;
+export function removeFormData(options: RemovalOptions, callback: () => void): void;
 export function removeFileSystems(options: RemovalOptions): Promise<void>;
-export function removeFileSystems(options: RemovalOptions, callback?: () => void): void;
+export function removeFileSystems(options: RemovalOptions, callback: () => void): void;
 export function remove(options: RemovalOptions, dataToRemove: DataTypeSet): Promise<void>;
-export function remove(options: RemovalOptions, dataToRemove: DataTypeSet, callback?: () => void): void;
+export function remove(options: RemovalOptions, dataToRemove: DataTypeSet, callback: () => void): void;
 export function removePasswords(options: RemovalOptions): Promise<void>;
-export function removePasswords(options: RemovalOptions, callback?: () => void): void;
-export function removeCookies(options: RemovalOptions, callback?: () => void): Promise<void>;
-export function removeCookies(options: RemovalOptions, callback?: () => void): void;
+export function removePasswords(options: RemovalOptions, callback: () => void): void;
+export function removeCookies(options: RemovalOptions): Promise<void>;
+export function removeCookies(options: RemovalOptions, callback: () => void): void;
 export function removeWebSQL(options: RemovalOptions): Promise<void>;
-export function removeWebSQL(options: RemovalOptions, callback?: () => void): void;
+export function removeWebSQL(options: RemovalOptions, callback: () => void): void;
 export function removeAppcache(options: RemovalOptions): Promise<void>;
-export function removeAppcache(options: RemovalOptions, callback?: () => void): void;
+export function removeAppcache(options: RemovalOptions, callback: () => void): void;
 export function removeCacheStorage(options: RemovalOptions): Promise<void>;
-export function removeCacheStorage(options: RemovalOptions, callback?: () => void): void;
+export function removeCacheStorage(options: RemovalOptions, callback: () => void): void;
 export function removeDownloads(options: RemovalOptions): Promise<void>;
-export function removeDownloads(options: RemovalOptions, callback?: () => void): void;
+export function removeDownloads(options: RemovalOptions, callback: () => void): void;
 export function removeLocalStorage(options: RemovalOptions): Promise<void>;
-export function removeLocalStorage(options: RemovalOptions, callback?: () => void): void;
+export function removeLocalStorage(options: RemovalOptions, callback: () => void): void;
 export function removeCache(options: RemovalOptions): Promise<void>;
-export function removeCache(options: RemovalOptions, callback?: () => void): void;
+export function removeCache(options: RemovalOptions, callback: () => void): void;
 export function removeHistory(options: RemovalOptions): Promise<void>;
-export function removeHistory(options: RemovalOptions, callback?: () => void): void;
+export function removeHistory(options: RemovalOptions, callback: () => void): void;
 export function removeIndexedDB(options: RemovalOptions): Promise<void>;
-export function removeIndexedDB(options: RemovalOptions, callback?: () => void): void;
+export function removeIndexedDB(options: RemovalOptions, callback: () => void): void;

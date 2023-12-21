@@ -156,8 +156,6 @@ export interface MenuClickedEvent extends Event<(info: OnClickData, tab?: Tab) =
 export var ACTION_MENU_TOP_LEVEL_LIMIT: number;
 export function removeAll(callback?: () => void): void;
 export function create(createProperties: CreateProperties, callback?: () => void): number | string;
-export function update(id: string, updateProperties: UpdateProperties, callback?: () => void): void;
-export function update(id: number, updateProperties: UpdateProperties, callback?: () => void): void;
-export function remove(menuItemId: string, callback?: () => void): void;
-export function remove(menuItemId: number, callback?: () => void): void;
+export function update(id: string | number, updateProperties: UpdateProperties, callback?: () => void): void;
+export function remove(menuItemId: string | number, callback?: () => void): void;
 export var onClicked: MenuClickedEvent;

@@ -76,6 +76,16 @@ export interface MessageSender {
      * @since Chrome 80.
      */
     origin?: string | undefined;
+    /**
+     * The lifecycle the document that opened the connection is in at the time the port was created. Note that the lifecycle state of the document may have changed since port creation.
+     * @since Chrome 106.
+     */
+    documentLifecycle?: DocumentLifecycle | undefined;
+    /**
+     * A UUID of the document that opened the connection.
+     * @since Chrome 106.
+     */
+    documentId?: string | undefined;
 }
 
 export interface PlatformInfo {
@@ -119,6 +129,13 @@ export interface UpdateCheckDetails {
 }
 
 export type RequestUpdateCheckStatus = 'throttled' | 'no_update' | 'update_available';
+export interface RequestUpdateCheckResult {
+    /** The status of the update check. */
+    status: RequestUpdateCheckStatus;
+    /** The version of the available update. */
+    version: string;
+}
+
 export interface PortDisconnectEvent extends Event<(port: Port) => void> {}
 
 export interface PortMessageEvent extends Event<(message: any, port: Port) => void> {}
@@ -162,15 +179,19 @@ export type ManifestPermissions =
     | 'declarativeContent'
     | 'declarativeNetRequest'
     | 'declarativeNetRequestFeedback'
+    | 'declarativeNetRequestWithHostAccess'
     | 'declarativeWebRequest'
     | 'desktopCapture'
     | 'documentScan'
     | 'downloads'
+    | 'downloads.shelf'
+    | 'downloads.ui'
     | 'enterprise.deviceAttributes'
     | 'enterprise.hardwarePlatform'
     | 'enterprise.networkingAttributes'
     | 'enterprise.platformKeys'
     | 'experimental'
+    | 'favicon'
     | 'fileBrowserHandler'
     | 'fileSystemProvider'
     | 'fontSettings'
@@ -184,6 +205,7 @@ export type ManifestPermissions =
     | 'management'
     | 'nativeMessaging'
     | 'notifications'
+    | 'offscreen'
     | 'pageCapture'
     | 'platformKeys'
     | 'power'
@@ -196,6 +218,7 @@ export type ManifestPermissions =
     | 'scripting'
     | 'search'
     | 'sessions'
+    | 'sidePanel'
     | 'signedInDevices'
     | 'storage'
     | 'system.cpu'
@@ -294,7 +317,7 @@ export interface ManifestBase {
           }
         | undefined;
     content_scripts?:
-        | {
+        | Array<{
               matches?: string[] | undefined;
               exclude_matches?: string[] | undefined;
               css?: string[] | undefined;
@@ -304,21 +327,21 @@ export interface ManifestBase {
               match_about_blank?: boolean | undefined;
               include_globs?: string[] | undefined;
               exclude_globs?: string[] | undefined;
-          }[]
+          }>
         | undefined;
     converted_from_user_script?: boolean | undefined;
     current_locale?: string | undefined;
     devtools_page?: string | undefined;
     event_rules?:
-        | {
+        | Array<{
               event?: string | undefined;
               actions?:
-                  | {
+                  | Array<{
                         type: string;
-                    }[]
+                    }>
                   | undefined;
               conditions?: PageStateMatcherProperties[] | undefined;
-          }[]
+          }>
         | undefined;
     externally_connectable?:
         | {
@@ -328,11 +351,11 @@ export interface ManifestBase {
           }
         | undefined;
     file_browser_handlers?:
-        | {
+        | Array<{
               id?: string | undefined;
               default_title?: string | undefined;
               file_filters?: string[] | undefined;
-          }[]
+          }>
         | undefined;
     file_system_provider_capabilities?:
         | {
@@ -344,10 +367,10 @@ export interface ManifestBase {
         | undefined;
     homepage_url?: string | undefined;
     import?:
-        | {
+        | Array<{
               id: string;
               minimum_version?: string | undefined;
-          }[]
+          }>
         | undefined;
     export?:
         | {
@@ -356,7 +379,7 @@ export interface ManifestBase {
         | undefined;
     incognito?: string | undefined;
     input_components?:
-        | {
+        | Array<{
               name?: string | undefined;
               type?: string | undefined;
               id?: string | undefined;
@@ -364,15 +387,15 @@ export interface ManifestBase {
               language?: string[] | string | undefined;
               layouts?: string[] | undefined;
               indicator?: string | undefined;
-          }[]
+          }>
         | undefined;
     key?: string | undefined;
     minimum_chrome_version?: string | undefined;
     nacl_modules?:
-        | {
+        | Array<{
               path: string;
               mime_type: string;
-          }[]
+          }>
         | undefined;
     oauth2?:
         | {
@@ -395,15 +418,15 @@ export interface ManifestBase {
           }
         | undefined;
     platforms?:
-        | {
+        | Array<{
               nacl_arch?: string | undefined;
               sub_package_path: string;
-          }[]
+          }>
         | undefined;
     plugins?:
-        | {
+        | Array<{
               path: string;
-          }[]
+          }>
         | undefined;
     requirements?:
         | {
@@ -441,12 +464,12 @@ export interface ManifestBase {
         | undefined;
     tts_engine?:
         | {
-              voices: {
+              voices: Array<{
                   voice_name: string;
                   lang?: string | undefined;
                   gender?: string | undefined;
                   event_types?: string[] | undefined;
-              }[];
+              }>;
           }
         | undefined;
     update_url?: string | undefined;
@@ -488,6 +511,20 @@ export interface ManifestV3 extends ManifestBase {
               type?: 'module'; // If the service worker uses ES modules
           }
         | undefined;
+    content_scripts?:
+        | Array<{
+              matches?: string[] | undefined;
+              exclude_matches?: string[] | undefined;
+              css?: string[] | undefined;
+              js?: string[] | undefined;
+              run_at?: string | undefined;
+              all_frames?: boolean | undefined;
+              match_about_blank?: boolean | undefined;
+              include_globs?: string[] | undefined;
+              exclude_globs?: string[] | undefined;
+              world?: 'ISOLATED' | 'MAIN' | undefined;
+          }>
+        | undefined;
     content_security_policy?: {
         extension_pages?: string;
         sandbox?: string;
@@ -495,7 +532,7 @@ export interface ManifestV3 extends ManifestBase {
     host_permissions?: string[] | undefined;
     optional_permissions?: ManifestPermissions[] | undefined;
     permissions?: ManifestPermissions[] | undefined;
-    web_accessible_resources?: { resources: string[]; matches: string[] }[] | undefined;
+    web_accessible_resources?: Array<{ resources: string[]; matches: string[] }> | undefined;
 }
 
 export type Manifest = ManifestV2 | ManifestV3;
@@ -509,6 +546,7 @@ export function getPlatformInfo(callback: (platformInfo: PlatformInfo) => void):
 export function getPlatformInfo(): Promise<PlatformInfo>;
 export function getURL(path: string): string;
 export function reload(): void;
+export function requestUpdateCheck(): Promise<RequestUpdateCheckResult>;
 export function requestUpdateCheck(
     callback: (status: RequestUpdateCheckStatus, details?: UpdateCheckDetails) => void,
 ): void;
@@ -521,21 +559,21 @@ export function sendMessage<M = any, R = any>(
     responseCallback: (response: R) => void,
 ): void;
 export function sendMessage<M = any, R = any>(
-    extensionId: string,
+    extensionId: string | undefined | null,
     message: M,
     responseCallback: (response: R) => void,
 ): void;
 export function sendMessage<Message = any, Response = any>(
-    extensionId: string,
+    extensionId: string | undefined | null,
     message: Message,
     options: MessageOptions,
     responseCallback: (response: Response) => void,
 ): void;
 export function sendMessage<M = any, R = any>(message: M): Promise<R>;
 export function sendMessage<M = any, R = any>(message: M, options: MessageOptions): Promise<R>;
-export function sendMessage<M = any, R = any>(extensionId: string, message: M): Promise<R>;
+export function sendMessage<M = any, R = any>(extensionId: string | undefined | null, message: M): Promise<R>;
 export function sendMessage<Message = any, Response = any>(
-    extensionId: string,
+    extensionId: string | undefined | null,
     message: Message,
     options: MessageOptions,
 ): Promise<Response>;

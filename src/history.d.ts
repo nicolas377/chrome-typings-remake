@@ -63,16 +63,16 @@ export interface HistoryVisitedEvent extends Event<(result: HistoryItem) => void
 export interface HistoryVisitRemovedEvent extends Event<(removed: RemovedResult) => void> {}
 
 export function search(query: HistoryQuery): Promise<HistoryItem[]>;
-export function search(query: HistoryQuery, callback?: (results: HistoryItem[]) => void): void;
+export function search(query: HistoryQuery, callback: (results: HistoryItem[]) => void): void;
 export function addUrl(details: Url): Promise<void>;
-export function addUrl(details: Url, callback?: () => void): void;
+export function addUrl(details: Url, callback: () => void): void;
 export function deleteRange(range: Range): Promise<void>;
-export function deleteRange(range: Range, callback?: () => void): void;
+export function deleteRange(range: Range, callback: () => void): void;
 export function deleteAll(): Promise<void>;
 export function deleteAll(callback: () => void): void;
 export function getVisits(details: Url): Promise<VisitItem[]>;
 export function getVisits(details: Url, callback: (results: VisitItem[]) => void): void;
 export function deleteUrl(details: Url): Promise<void>;
-export function deleteUrl(details: Url, callback?: () => void): void;
+export function deleteUrl(details: Url, callback: () => void): void;
 export var onVisited: HistoryVisitedEvent;
 export var onVisitRemoved: HistoryVisitRemovedEvent;

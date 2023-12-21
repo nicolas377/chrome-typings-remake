@@ -39,7 +39,7 @@ export interface ProxyRules {
     proxyForFtp?: ProxyServer | undefined;
     /** Optional. The proxy server to be used for HTTP requests. */
     proxyForHttp?: ProxyServer | undefined;
-    /** Optional. The proxy server to be used for everthing else or if any of the specific proxyFor... is not specified. */
+    /** Optional. The proxy server to be used for everything else or if any of the specific proxyFor... is not specified. */
     fallbackProxy?: ProxyServer | undefined;
     /** Optional. The proxy server to be used for all per-URL requests (that is http, https, and ftp). */
     singleProxy?: ProxyServer | undefined;

@@ -119,36 +119,38 @@ export interface ManagementInstalledEvent extends Event<(info: ExtensionInfo) =>
 export interface ManagementEnabledEvent extends Event<(info: ExtensionInfo) => void> {}
 
 export function setEnabled(id: string, enabled: boolean): Promise<void>;
-export function setEnabled(id: string, enabled: boolean, callback?: () => void): void;
+export function setEnabled(id: string, enabled: boolean, callback: () => void): void;
 export function getPermissionWarningsById(id: string): Promise<string[]>;
-export function getPermissionWarningsById(id: string, callback?: (permissionWarnings: string[]) => void): void;
+export function getPermissionWarningsById(id: string, callback: (permissionWarnings: string[]) => void): void;
 export function get(id: string): Promise<ExtensionInfo>;
-export function get(id: string, callback?: (result: ExtensionInfo) => void): void;
+export function get(id: string, callback: (result: ExtensionInfo) => void): void;
 export function getAll(): Promise<ExtensionInfo[]>;
-export function getAll(callback?: (result: ExtensionInfo[]) => void): void;
+export function getAll(callback: (result: ExtensionInfo[]) => void): void;
 export function getPermissionWarningsByManifest(manifestStr: string): Promise<string[]>;
 export function getPermissionWarningsByManifest(
     manifestStr: string,
-    callback?: (permissionwarnings: string[]) => void,
+    callback: (permissionwarnings: string[]) => void,
 ): void;
 export function launchApp(id: string): Promise<void>;
-export function launchApp(id: string, callback?: () => void): void;
+export function launchApp(id: string, callback: () => void): void;
 export function uninstall(id: string, options?: UninstallOptions): Promise<void>;
-export function uninstall(id: string, options?: UninstallOptions, callback?: () => void): void;
+export function uninstall(id: string, callback: () => void): void;
+export function uninstall(id: string, options: UninstallOptions, callback: () => void): void;
 export function uninstall(id: string): Promise<void>;
-export function uninstall(id: string, callback?: () => void): void;
+export function uninstall(id: string, callback: () => void): void;
 export function getSelf(): Promise<ExtensionInfo>;
-export function getSelf(callback?: (result: ExtensionInfo) => void): void;
+export function getSelf(callback: (result: ExtensionInfo) => void): void;
 export function uninstallSelf(options?: UninstallOptions): Promise<void>;
-export function uninstallSelf(options?: UninstallOptions, callback?: () => void): void;
+export function uninstallSelf(callback: () => void): void;
+export function uninstallSelf(options: UninstallOptions, callback: () => void): void;
 export function uninstallSelf(): Promise<void>;
-export function uninstallSelf(callback?: () => void): void;
+export function uninstallSelf(callback: () => void): void;
 export function createAppShortcut(id: string): Promise<void>;
-export function createAppShortcut(id: string, callback?: () => void): void;
+export function createAppShortcut(id: string, callback: () => void): void;
 export function setLaunchType(id: string, launchType: string): Promise<void>;
-export function setLaunchType(id: string, launchType: string, callback?: () => void): void;
+export function setLaunchType(id: string, launchType: string, callback: () => void): void;
 export function generateAppForLink(url: string, title: string): Promise<ExtensionInfo>;
-export function generateAppForLink(url: string, title: string, callback?: (result: ExtensionInfo) => void): void;
+export function generateAppForLink(url: string, title: string, callback: (result: ExtensionInfo) => void): void;
 export var onDisabled: ManagementDisabledEvent;
 export var onUninstalled: ManagementUninstalledEvent;
 export var onInstalled: ManagementInstalledEvent;

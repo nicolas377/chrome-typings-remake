@@ -119,8 +119,8 @@ export interface WebRequestHeadersDetails extends WebRequestDetails {
     /** Optional. The HTTP request headers that are going to be sent out with this request. */
     requestHeaders?: HttpHeader[] | undefined;
     documentId: string;
-    documentLifecycle: 'prerender' | 'active' | 'cached' | 'pending_deletion';
-    frameType: 'outermost_frame' | 'fenced_frame' | 'sub_frame';
+    documentLifecycle: DocumentLifecycle;
+    frameType: FrameType;
     frameId: number;
     initiator?: string | undefined;
     parentDocumentId?: string | undefined;
@@ -190,8 +190,12 @@ export interface WebResponseErrorDetails extends WebResponseCacheDetails {
 }
 
 export interface WebRequestBodyEvent
-    extends EventWithRequiredFilterInAddListener<(details: WebRequestBodyDetails) => BlockingResponse | void> {
+    extends EventWithRequiredFilterInAddListener<
+        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+        (details: WebRequestBodyDetails) => BlockingResponse | void
+    > {
     addListener(
+        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
         callback: (details: WebRequestBodyDetails) => BlockingResponse | void,
         filter: RequestFilter,
         opt_extraInfoSpec?: string[],
@@ -199,8 +203,12 @@ export interface WebRequestBodyEvent
 }
 
 export interface WebRequestHeadersSynchronousEvent
-    extends EventWithRequiredFilterInAddListener<(details: WebRequestHeadersDetails) => BlockingResponse | void> {
+    extends EventWithRequiredFilterInAddListener<
+        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+        (details: WebRequestHeadersDetails) => BlockingResponse | void
+    > {
     addListener(
+        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
         callback: (details: WebRequestHeadersDetails) => BlockingResponse | void,
         filter: RequestFilter,
         opt_extraInfoSpec?: string[],
@@ -222,8 +230,12 @@ export interface _WebResponseHeadersEvent<T extends WebResponseHeadersDetails>
 }
 
 export interface WebResponseHeadersEvent
-    extends EventWithRequiredFilterInAddListener<(details: WebResponseHeadersDetails) => BlockingResponse | void> {
+    extends EventWithRequiredFilterInAddListener<
+        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+        (details: WebResponseHeadersDetails) => BlockingResponse | void
+    > {
     addListener(
+        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
         callback: (details: WebResponseHeadersDetails) => BlockingResponse | void,
         filter: RequestFilter,
         opt_extraInfoSpec?: string[],

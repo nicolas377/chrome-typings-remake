@@ -40,7 +40,7 @@ export interface UrlFilter {
     /** Optional. Matches if the URL (without fragment identifier) ends with a specified string. Port numbers are stripped from the URL if they match the default port number.  */
     urlSuffix?: string | undefined;
     /** Optional. Matches if the port of the URL is contained in any of the specified port lists. For example [80, 443, [1000, 1200]] matches all requests on port 80, 443 and in the range 1000-1200.  */
-    ports?: (number | number[])[] | undefined;
+    ports?: Array<number | number[]> | undefined;
     /**
      * Optional.
      * Since Chrome 28.
@@ -54,20 +54,25 @@ export interface BaseEvent<T extends Function> {
     /**
      * Returns currently registered rules.
      * @param callback Called with registered rules.
-     * The callback parameter should be a function that looks like this:
-     * function(array of Rule rules) {...};
-     * Parameter rules: Rules that were registered, the optional parameters are filled with values.
      */
-    getRules(callback: (rules: Rule[]) => void): void;
+    getRules(
+        callback: (
+            /** Rules that were registered, the optional parameters are filled with values */
+            rules: Rule[],
+        ) => void,
+    ): void;
     /**
      * Returns currently registered rules.
      * @param ruleIdentifiers If an array is passed, only rules with identifiers contained in this array are returned.
      * @param callback Called with registered rules.
-     * The callback parameter should be a function that looks like this:
-     * function(array of Rule rules) {...};
-     * Parameter rules: Rules that were registered, the optional parameters are filled with values.
      */
-    getRules(ruleIdentifiers: string[], callback: (rules: Rule[]) => void): void;
+    getRules(
+        ruleIdentifiers: string[],
+        callback: (
+            /** Rules that were registered, the optional parameters are filled with values */
+            rules: Rule[],
+        ) => void,
+    ): void;
     /**
      * @param callback Listener whose registration status shall be tested.
      */
@@ -76,31 +81,28 @@ export interface BaseEvent<T extends Function> {
      * Unregisters currently registered rules.
      * @param ruleIdentifiers If an array is passed, only rules with identifiers contained in this array are unregistered.
      * @param callback Called when rules were unregistered.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     removeRules(ruleIdentifiers?: string[], callback?: () => void): void;
     /**
      * Unregisters currently registered rules.
      * @param callback Called when rules were unregistered.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     removeRules(callback?: () => void): void;
     /**
      * Registers rules to handle events.
      * @param rules Rules to be registered. These do not replace previously registered rules.
      * @param callback Called with registered rules.
-     * If you specify the callback parameter, it should be a function that looks like this:
-     * function(array of Rule rules) {...};
-     * Parameter rules: Rules that were registered, the optional parameters are filled with values.
      */
-    addRules(rules: Rule[], callback?: (rules: Rule[]) => void): void;
+    addRules(
+        rules: Rule[],
+        callback?: (
+            /** Rules that were registered, the optional parameters are filled with values */
+            rules: Rule[],
+        ) => void,
+    ): void;
     /**
      * Deregisters an event listener callback from an event.
      * @param callback Listener that shall be unregistered.
-     * The callback parameter should be a function that looks like this:
-     * function() {...};
      */
     removeListener(callback: T): void;
     hasListeners(): boolean;
@@ -110,8 +112,6 @@ interface Event<T extends Function> extends BaseEvent<T> {
     /**
      * Registers an event listener callback to an event.
      * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-     * The callback parameter should be a function that looks like this:
-     * function() {...};
      */
     addListener(callback: T): void;
 }

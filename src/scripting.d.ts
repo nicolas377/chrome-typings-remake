@@ -32,6 +32,8 @@ export type ScriptInjection<Args extends any[], Result> = {
     target: InjectionTarget;
     /* The JavaScript world for a script to execute within. */
     world?: ExecutionWorld;
+    /* Whether the injection should be triggered in the target as soon as possible. Note that this is not a guarantee that injection will occur prior to page load, as the page may have already loaded by the time the script reaches the target. */
+    injectImmediately?: boolean;
 } & (
     | {
           /* The path of the JS files to inject, relative to the extension's root directory. NOTE: Currently a maximum of one file is supported. Exactly one of files and function must be specified. */
@@ -54,6 +56,7 @@ type Awaited<T> = T extends PromiseLike<infer U> ? U : T;
 interface RegisteredContentScript {
     id: string;
     allFrames?: boolean;
+    matchOriginAsFallback?: boolean;
     css?: string[];
     excludeMatches?: string[];
     js?: string[];
@@ -73,21 +76,25 @@ interface ContentScriptFilter {
 
 export function executeScript<Args extends any[], Result>(
     injection: ScriptInjection<Args, Result>,
-): Promise<InjectionResult<Awaited<Result>>[]>;
+): Promise<Array<InjectionResult<Awaited<Result>>>>;
 export function executeScript<Args extends any[], Result>(
     injection: ScriptInjection<Args, Result>,
-    callback?: (results: InjectionResult<Awaited<Result>>[]) => void,
+    callback: (results: Array<InjectionResult<Awaited<Result>>>) => void,
 ): void;
 export function insertCSS(injection: CSSInjection): Promise<void>;
-export function insertCSS(injection: CSSInjection, callback?: () => void): void;
+export function insertCSS(injection: CSSInjection, callback: () => void): void;
 export function removeCSS(injection: CSSInjection): Promise<void>;
-export function removeCSS(injection: CSSInjection, callback?: () => void): void;
+export function removeCSS(injection: CSSInjection, callback: () => void): void;
 export function registerContentScripts(scripts: RegisteredContentScript[]): Promise<void>;
-export function registerContentScripts(scripts: RegisteredContentScript[], callback?: () => void): void;
+export function registerContentScripts(scripts: RegisteredContentScript[], callback: () => void): void;
 export function unregisterContentScripts(filter?: ContentScriptFilter): Promise<void>;
-export function unregisterContentScripts(filter?: ContentScriptFilter, callback?: () => void): void;
+export function unregisterContentScripts(callback: () => void): void;
+export function unregisterContentScripts(filter: ContentScriptFilter, callback: () => void): void;
 export function getRegisteredContentScripts(filter?: ContentScriptFilter): Promise<RegisteredContentScript[]>;
+export function getRegisteredContentScripts(callback: (scripts: RegisteredContentScript[]) => void): void;
 export function getRegisteredContentScripts(
-    filter?: ContentScriptFilter,
-    callback?: (scripts: RegisteredContentScript[]) => void,
+    filter: ContentScriptFilter,
+    callback: (scripts: RegisteredContentScript[]) => void,
 ): void;
+export function updateContentScripts(scripts: RegisteredContentScript[]): Promise<void>;
+export function updateContentScripts(scripts: RegisteredContentScript[], callback: () => void): void;

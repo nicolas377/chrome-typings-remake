@@ -9,3 +9,4 @@ export interface QueryInfo {
 }
 
 export function query(options: QueryInfo, callback: () => void): void;
+export function query(options: QueryInfo): Promise<void>;

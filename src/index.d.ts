@@ -32,6 +32,7 @@ import * as declarativeContent from './declarativeContent';
 import * as declarativeWebRequest from './declarativeWebRequest';
 import * as desktopCapture from './desktopCapture';
 import * as documentScan from './documentScan';
+import * as dom from './dom';
 import * as downloads from './downloads';
 import * as events from './events';
 import * as extension from './extension';
@@ -46,6 +47,7 @@ import * as idle from './idle';
 import * as loginState from './loginState';
 import * as management from './management';
 import * as notifications from './notifications';
+import * as offscreen from './offscreen';
 import * as omnibox from './omnibox';
 import * as pageAction from './pageAction';
 import * as pageCapture from './pageCapture';
@@ -77,6 +79,7 @@ import * as webRequest from './webRequest';
 import * as webstore from './webstore';
 import * as windows from './windows';
 import * as declarativeNetRequest from './declarativeNetRequest';
+import * as sidePanel from './sidePanel';
 import * as devtools from './devtools';
 import * as enterprise from './enterprise';
 import * as input from './input';
@@ -101,6 +104,7 @@ declare global {
             declarativeWebRequest,
             desktopCapture,
             documentScan,
+            dom,
             downloads,
             events,
             extension,
@@ -115,6 +119,7 @@ declare global {
             loginState,
             management,
             notifications,
+            offscreen,
             omnibox,
             pageAction,
             pageCapture,
@@ -146,6 +151,7 @@ declare global {
             webstore,
             windows,
             declarativeNetRequest,
+            sidePanel,
             devtools,
             enterprise,
             input,

@@ -32,7 +32,7 @@ export interface StorageArea {
      * @param callback Optional.
      * Callback on success, or on failure (in which case runtime.lastError will be set).
      */
-    clear(callback?: () => void): void;
+    clear(callback: () => void): void;
     /**
      * Sets multiple items.
      * @param items An object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.
@@ -48,7 +48,7 @@ export interface StorageArea {
      * @param callback Optional.
      * Callback on success, or on failure (in which case runtime.lastError will be set).
      */
-    set(items: { [key: string]: any }, callback?: () => void): void;
+    set(items: { [key: string]: any }, callback: () => void): void;
     /**
      * Removes one or more items from storage.
      * @param keys A single key or a list of keys for items to remove.
@@ -63,7 +63,7 @@ export interface StorageArea {
      * @param callback Optional.
      * Callback on success, or on failure (in which case runtime.lastError will be set).
      */
-    remove(keys: string | string[], callback?: () => void): void;
+    remove(keys: string | string[], callback: () => void): void;
     /**
      * Gets the entire contents of storage.
      * @param callback Callback with storage items, or on failure (in which case runtime.lastError will be set).

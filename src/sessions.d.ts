@@ -33,9 +33,13 @@ export interface Device {
 export interface SessionChangedEvent extends Event<() => void> {}
 
 export var MAX_SESSION_RESULTS: number;
+export function getRecentlyClosed(filter?: Filter): Promise<Session[]>;
 export function getRecentlyClosed(filter: Filter, callback: (sessions: Session[]) => void): void;
 export function getRecentlyClosed(callback: (sessions: Session[]) => void): void;
+export function getDevices(filter?: Filter): Promise<Device[]>;
 export function getDevices(filter: Filter, callback: (devices: Device[]) => void): void;
 export function getDevices(callback: (devices: Device[]) => void): void;
-export function restore(sessionId?: string, callback?: (restoredSession: Session) => void): void;
+export function restore(sessionId?: string): Promise<Session>;
+export function restore(sessionId: string, callback: (restoredSession: Session) => void): void;
+export function restore(callback: (restoredSession: Session) => void): void;
 export var onChanged: SessionChangedEvent;

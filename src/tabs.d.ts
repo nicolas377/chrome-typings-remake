@@ -297,11 +297,21 @@ export interface ConnectInfo {
      * @since Chrome 41.
      */
     frameId?: number | undefined;
+    /**
+     * Optional. Open a port to a specific document identified by documentId instead of all frames in the tab.
+     * @since Chrome 106.
+     */
+    documentId?: string;
 }
 
 export interface MessageSendOptions {
     /** Optional. Send a message to a specific frame identified by frameId instead of all frames in the tab. */
     frameId?: number | undefined;
+    /**
+     * Optional. Send a message to a specific document identified by documentId instead of all frames in the tab.
+     * @since Chrome 106.
+     */
+    documentId?: string;
 }
 
 export interface GroupOptions {
@@ -528,19 +538,19 @@ export function getSelected(): Promise<Tab>;
 export function getSelected(windowId: number, callback: (tab: Tab) => void): void;
 export function getSelected(windowId: number): Promise<Tab>;
 export function create(createProperties: CreateProperties): Promise<Tab>;
-export function create(createProperties: CreateProperties, callback?: (tab: Tab) => void): void;
+export function create(createProperties: CreateProperties, callback: (tab: Tab) => void): void;
 export function move(tabId: number, moveProperties: MoveProperties): Promise<Tab>;
-export function move(tabId: number, moveProperties: MoveProperties, callback?: (tab: Tab) => void): void;
+export function move(tabId: number, moveProperties: MoveProperties, callback: (tab: Tab) => void): void;
 export function move(tabIds: number[], moveProperties: MoveProperties): Promise<Tab[]>;
-export function move(tabIds: number[], moveProperties: MoveProperties, callback?: (tabs: Tab[]) => void): void;
+export function move(tabIds: number[], moveProperties: MoveProperties, callback: (tabs: Tab[]) => void): void;
 export function update(updateProperties: UpdateProperties): Promise<Tab>;
-export function update(updateProperties: UpdateProperties, callback?: (tab?: Tab) => void): void;
+export function update(updateProperties: UpdateProperties, callback: (tab?: Tab) => void): void;
 export function update(tabId: number, updateProperties: UpdateProperties): Promise<Tab>;
-export function update(tabId: number, updateProperties: UpdateProperties, callback?: (tab?: Tab) => void): void;
+export function update(tabId: number, updateProperties: UpdateProperties, callback: (tab?: Tab) => void): void;
 export function remove(tabId: number): Promise<void>;
-export function remove(tabId: number, callback?: Function): void;
+export function remove(tabId: number, callback: Function): void;
 export function remove(tabIds: number[]): Promise<void>;
-export function remove(tabIds: number[], callback?: Function): void;
+export function remove(tabIds: number[], callback: Function): void;
 export function captureVisibleTab(callback: (dataUrl: string) => void): void;
 export function captureVisibleTab(): Promise<string>;
 export function captureVisibleTab(windowId: number, callback: (dataUrl: string) => void): void;
@@ -556,10 +566,11 @@ export function captureVisibleTab(
 export function reload(tabId: number, reloadProperties?: ReloadProperties): Promise<void>;
 export function reload(tabId: number, reloadProperties?: ReloadProperties, callback?: () => void): void;
 export function reload(reloadProperties: ReloadProperties): Promise<void>;
-export function reload(reloadProperties: ReloadProperties, callback?: () => void): void;
+export function reload(reloadProperties: ReloadProperties, callback: () => void): void;
 export function reload(): Promise<void>;
-export function reload(callback?: () => void): void;
-export function duplicate(tabId: number, callback?: (tab?: Tab) => void): void;
+export function reload(callback: () => void): void;
+export function duplicate(tabId: number): Promise<Tab | undefined>;
+export function duplicate(tabId: number, callback: (tab?: Tab) => void): void;
 export function sendMessage<M = any, R = any>(tabId: number, message: M, responseCallback: (response: R) => void): void;
 export function sendMessage<M = any, R = any>(
     tabId: number,
@@ -576,11 +587,11 @@ export function sendRequest<Request = any, Response = any>(
 ): void;
 export function connect(tabId: number, connectInfo?: ConnectInfo): runtime.Port;
 export function insertCSS(details: InjectDetails): Promise<void>;
-export function insertCSS(details: InjectDetails, callback?: Function): void;
+export function insertCSS(details: InjectDetails, callback: Function): void;
 export function insertCSS(tabId: number, details: InjectDetails): Promise<void>;
-export function insertCSS(tabId: number, details: InjectDetails, callback?: Function): void;
+export function insertCSS(tabId: number, details: InjectDetails, callback: Function): void;
 export function highlight(highlightInfo: HighlightInfo): Promise<Window>;
-export function highlight(highlightInfo: HighlightInfo, callback?: (window: Window) => void): void;
+export function highlight(highlightInfo: HighlightInfo, callback: (window: Window) => void): void;
 export function query(queryInfo: QueryInfo, callback: (result: Tab[]) => void): void;
 export function query(queryInfo: QueryInfo): Promise<Tab[]>;
 export function detectLanguage(callback: (language: string) => void): void;
@@ -588,36 +599,37 @@ export function detectLanguage(): Promise<string>;
 export function detectLanguage(tabId: number, callback: (language: string) => void): void;
 export function detectLanguage(tabId: number): Promise<string>;
 export function setZoom(zoomFactor: number): Promise<void>;
-export function setZoom(zoomFactor: number, callback?: () => void): void;
+export function setZoom(zoomFactor: number, callback: () => void): void;
 export function setZoom(tabId: number, zoomFactor: number): Promise<void>;
-export function setZoom(tabId: number, zoomFactor: number, callback?: () => void): void;
+export function setZoom(tabId: number, zoomFactor: number, callback: () => void): void;
 export function getZoom(callback: (zoomFactor: number) => void): void;
 export function getZoom(): Promise<number>;
 export function getZoom(tabId: number, callback: (zoomFactor: number) => void): void;
 export function getZoom(tabId: number): Promise<number>;
 export function setZoomSettings(zoomSettings: ZoomSettings): Promise<void>;
-export function setZoomSettings(zoomSettings: ZoomSettings, callback?: () => void): void;
+export function setZoomSettings(zoomSettings: ZoomSettings, callback: () => void): void;
 export function setZoomSettings(tabId: number, zoomSettings: ZoomSettings): Promise<void>;
-export function setZoomSettings(tabId: number, zoomSettings: ZoomSettings, callback?: () => void): void;
+export function setZoomSettings(tabId: number, zoomSettings: ZoomSettings, callback: () => void): void;
 export function getZoomSettings(callback: (zoomSettings: ZoomSettings) => void): void;
 export function getZoomSettings(): Promise<ZoomSettings>;
 export function getZoomSettings(tabId: number, callback: (zoomSettings: ZoomSettings) => void): void;
 export function getZoomSettings(tabId: number): Promise<ZoomSettings>;
 export function discard(tabId?: number): Promise<Tab>;
-export function discard(tabId?: number, callback?: (tab: Tab) => void): void;
+export function discard(callback: (tab: Tab) => void): void;
+export function discard(tabId: number, callback: (tab: Tab) => void): void;
 export function goForward(): Promise<void>;
-export function goForward(callback?: () => void): void;
+export function goForward(callback: () => void): void;
 export function goForward(tabId: number): Promise<void>;
-export function goForward(tabId: number, callback?: () => void): void;
+export function goForward(tabId: number, callback: () => void): void;
 export function goBack(): Promise<void>;
-export function goBack(callback?: () => void): void;
+export function goBack(callback: () => void): void;
 export function goBack(tabId: number): Promise<void>;
-export function goBack(tabId: number, callback?: () => void): void;
+export function goBack(tabId: number, callback: () => void): void;
 export function group(options: GroupOptions): Promise<number>;
 export function group(options: GroupOptions): Promise<number>;
-export function group(options: GroupOptions, callback?: (groupId: number) => void): void;
+export function group(options: GroupOptions, callback: (groupId: number) => void): void;
 export function ungroup(tabIds: number | number[]): Promise<void>;
-export function ungroup(tabIds: number | number[], callback?: () => void): void;
+export function ungroup(tabIds: number | number[], callback: () => void): void;
 export var onHighlighted: TabHighlightedEvent;
 export var onRemoved: TabRemovedEvent;
 export var onUpdated: TabUpdatedEvent;

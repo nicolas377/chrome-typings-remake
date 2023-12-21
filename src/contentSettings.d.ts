@@ -95,26 +95,22 @@ export interface ReturnedDetails {
 export interface ContentSetting {
     /**
      * Clear all content setting rules set by this extension.
-     * @param callback If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     clear(details: ClearDetails, callback?: () => void): void;
     /**
      * Applies a new content setting rule.
-     * @param callback If you specify the callback parameter, it should be a function that looks like this:
-     * function() {...};
      */
     set(details: SetDetails, callback?: () => void): void;
-    /**
-     * @param callback The callback parameter should be a function that looks like this:
-     * function(array of ResourceIdentifier resourceIdentifiers) {...};
-     * Parameter resourceIdentifiers: A list of resource identifiers for this content type, or undefined if this content type does not use resource identifiers.
-     */
-    getResourceIdentifiers(callback: (resourceIdentifiers?: ResourceIdentifier[]) => void): void;
+    getResourceIdentifiers(
+        callback: (
+            /**
+             * A list of resource identifiers for this content type, or undefined if this content type does not use resource identifiers.
+             */
+            resourceIdentifiers?: ResourceIdentifier[],
+        ) => void,
+    ): void;
     /**
      * Gets the current content setting for a given pair of URLs.
-     * @param callback The callback parameter should be a function that looks like this:
-     * function(object details) {...};
      */
     get(details: GetDetails, callback: (details: ReturnedDetails) => void): void;
 }

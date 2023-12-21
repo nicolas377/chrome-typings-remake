@@ -100,23 +100,23 @@ export function get(id: string): Promise<BookmarkTreeNode[]>;
 export function get(idList: string[], callback: (results: BookmarkTreeNode[]) => void): void;
 export function get(idList: string[]): Promise<BookmarkTreeNode[]>;
 export function create(bookmark: BookmarkCreateArg): Promise<BookmarkTreeNode>;
-export function create(bookmark: BookmarkCreateArg, callback?: (result: BookmarkTreeNode) => void): void;
+export function create(bookmark: BookmarkCreateArg, callback: (result: BookmarkTreeNode) => void): void;
 export function move(id: string, destination: BookmarkDestinationArg): Promise<BookmarkTreeNode>;
 export function move(
     id: string,
     destination: BookmarkDestinationArg,
-    callback?: (result: BookmarkTreeNode) => void,
+    callback: (result: BookmarkTreeNode) => void,
 ): void;
 export function update(id: string, changes: BookmarkChangesArg): Promise<BookmarkTreeNode>;
-export function update(id: string, changes: BookmarkChangesArg, callback?: (result: BookmarkTreeNode) => void): void;
+export function update(id: string, changes: BookmarkChangesArg, callback: (result: BookmarkTreeNode) => void): void;
 export function remove(id: string): Promise<void>;
-export function remove(id: string, callback?: Function): void;
+export function remove(id: string, callback: Function): void;
 export function getChildren(id: string, callback: (results: BookmarkTreeNode[]) => void): void;
 export function getChildren(id: string): Promise<BookmarkTreeNode[]>;
 export function getSubTree(id: string, callback: (results: BookmarkTreeNode[]) => void): void;
 export function getSubTree(id: string): Promise<BookmarkTreeNode[]>;
 export function removeTree(id: string): Promise<void>;
-export function removeTree(id: string, callback?: Function): void;
+export function removeTree(id: string, callback: Function): void;
 export var onRemoved: BookmarkRemovedEvent;
 export var onImportEnded: BookmarkImportEndedEvent;
 export var onImportBegan: BookmarkImportBeganEvent;

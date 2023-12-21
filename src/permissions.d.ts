@@ -12,26 +12,20 @@ export interface Permissions {
 }
 
 export interface PermissionsRemovedEvent {
-    /**
-     * @param callback The callback parameter should be a function that looks like this:
-     * function( Permissions permissions) {...};
-     * Parameter permissions: The permissions that have been removed.
-     */
-    addListener(callback: (permissions: Permissions) => void): void;
+    addListener(callback: (/** The permissions that have been removed*/ permissions: Permissions) => void): void;
 }
 
 export interface PermissionsAddedEvent {
-    /**
-     * @param callback The callback parameter should be a function that looks like this:
-     * function( Permissions permissions) {...};
-     * Parameter permissions: The newly acquired permissions.
-     */
-    addListener(callback: (permissions: Permissions) => void): void;
+    addListener(callback: (/** The newly-acquired permissions*/ permissions: Permissions) => void): void;
 }
 
+export function contains(permissions: Permissions): Promise<boolean>;
 export function contains(permissions: Permissions, callback: (result: boolean) => void): void;
+export function getAll(): Promise<Permissions>;
 export function getAll(callback: (permissions: Permissions) => void): void;
+export function request(permissions: Permissions): Promise<boolean>;
 export function request(permissions: Permissions, callback?: (granted: boolean) => void): void;
+export function remove(permissions: Permissions): Promise<boolean>;
 export function remove(permissions: Permissions, callback?: (removed: boolean) => void): void;
 export var onRemoved: PermissionsRemovedEvent;
 export var onAdded: PermissionsAddedEvent;

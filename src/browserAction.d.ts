@@ -20,12 +20,12 @@ export interface TitleDetails {
     /** The string the browser action should display when moused over. */
     title: string;
     /** Optional. Limits the change to when a particular tab is selected. Automatically resets when the tab is closed.  */
-    tabId?: number | undefined;
+    tabId?: number | null;
 }
 
 export interface TabDetails {
     /** Optional. Specify the tab to get the information. If no tab is specified, the non-tab-specific information is returned.  */
-    tabId?: number | undefined;
+    tabId?: number | null;
 }
 
 export interface TabIconDetails {
@@ -39,27 +39,29 @@ export interface TabIconDetails {
 
 export interface PopupDetails {
     /** Optional. Limits the change to when a particular tab is selected. Automatically resets when the tab is closed.  */
-    tabId?: number | undefined;
+    tabId?: number | null;
     /** The html file to show in a popup. If set to the empty string (''), no popup is shown. */
     popup: string;
 }
 
 export interface BrowserClickedEvent extends Event<(tab: Tab) => void> {}
 
-export function enable(tabId?: number): Promise<void>;
-export function enable(tabId?: number, callback?: () => void): void;
+export function enable(tabId?: number | null): Promise<void>;
+export function enable(callback?: () => void): void;
+export function enable(tabId: number | null | undefined, callback?: () => void): void;
 export function setBadgeBackgroundColor(details: BadgeBackgroundColorDetails): Promise<void>;
 export function setBadgeBackgroundColor(details: BadgeBackgroundColorDetails, callback?: () => void): void;
 export function setBadgeText(details: BadgeTextDetails): Promise<void>;
-export function setBadgeText(details: BadgeTextDetails, callback?: () => void): void;
+export function setBadgeText(details: BadgeTextDetails, callback: () => void): void;
 export function setTitle(details: TitleDetails): Promise<void>;
-export function setTitle(details: TitleDetails, callback?: () => void): void;
+export function setTitle(details: TitleDetails, callback: () => void): void;
 export function getBadgeText(details: TabDetails, callback: (result: string) => void): void;
 export function getBadgeText(details: TabDetails): Promise<string>;
 export function setPopup(details: PopupDetails): Promise<void>;
 export function setPopup(details: PopupDetails, callback?: () => void): void;
-export function disable(tabId?: number): Promise<void>;
-export function disable(tabId?: number, callback?: () => void): void;
+export function disable(tabId?: number | null): Promise<void>;
+export function disable(callback: () => void): void;
+export function disable(tabId?: number | null, callback?: () => void): void;
 export function getTitle(details: TabDetails, callback: (result: string) => void): void;
 export function getTitle(details: TabDetails): Promise<string>;
 export function getBadgeBackgroundColor(details: TabDetails, callback: (result: ColorArray) => void): void;

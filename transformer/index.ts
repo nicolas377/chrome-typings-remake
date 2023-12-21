@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process';
 import { rmSync, readFileSync } from 'node:fs';
 import { dirname, relative } from 'node:path';
 import {
@@ -9,9 +10,6 @@ import {
     Project,
     QuoteKind,
     SourceFile,
-    ts,
-    TypeReferenceNode,
-    VariableDeclarationKind,
 } from 'ts-morph';
 
 rmSync('src', { recursive: true, force: true });
@@ -52,6 +50,11 @@ const nestedNamespaceNames: Set<string> = new Set();
 // TODO: put the exports and imports in alphabetical order
 
 for (const oldNamespace of oldNamespaces) {
+    // patch for the original AreaName type, it breaks everything and is better to just use a string union
+    oldNamespace
+        .getTypeAlias(s => s.getName() === 'AreaName')
+        ?.replaceWithText(`type AreaName = 'sync' | 'local' | 'managed' | 'session';`);
+
     // get the name of the namespace, and remove the "chrome." prefix and replace dots with slashes
     const newNamespaceName = oldNamespace
         .getName()
@@ -156,7 +159,10 @@ mainNewDefs.addExportDeclaration({});
 
 mainNewDefs.formatText();
 
-project.save();
+project.saveSync();
+
+// run prettier on the src directory
+execSync('npx prettier --write src');
 
 function addNamespaceExport(namespaceName: string, namespaceFile: SourceFile, override = false) {
     if (!override && [...nestedNamespaceNames.values()].some(n => namespaceName.indexOf(n) !== -1)) {

@@ -20,7 +20,7 @@ export interface KeyboardEvent {
     altgrKey?: boolean | undefined;
     /**
      * Optional.
-     * The ID of the request.
+     * The ID of the request. Use the requestId param from the onKeyEvent event instead.
      * @deprecated since Chrome 79.
      */
     requestId?: string | undefined;
@@ -59,6 +59,7 @@ export interface KeyboardEvent {
     capsLock?: boolean | undefined;
 }
 
+export type AutoCapitalizeType = 'characters' | 'words' | 'sentences';
 export interface InputContext {
     /** This is used to specify targets of text field operations. This ID becomes invalid as soon as onBlur is called. */
     contextID: number;
@@ -79,6 +80,16 @@ export interface InputContext {
      * @since Chrome 40.
      */
     spellCheck: boolean;
+    /**
+     * The auto-capitalize type of the text field.
+     * @since Chrome 69.
+     */
+    autoCapitalize: AutoCapitalizeType;
+    /**
+     * Whether text entered into the text field should be used to improve typing suggestions for the user.
+     * @since Chrome 68.
+     */
+    shouldDoLearning: boolean;
 }
 
 export interface MenuItem {
@@ -225,6 +236,18 @@ export interface CandidateWindowParameterProperties {
      * @since Chrome 28.
      */
     windowPosition?: string | undefined;
+    /**
+     * Optional.
+     * The index of the current chosen candidate out of total candidates.
+     * @since Chrome 84.
+     */
+    currentCandidateIndex?: number | undefined;
+    /**
+     * Optional.
+     * The total number of candidates for the candidate window.
+     * @since Chrome 84.
+     */
+    totalCandidates?: number | undefined;
 }
 
 export interface CandidateWindowParameter {
@@ -286,7 +309,7 @@ export interface AssistiveWindowButtonClickedEvent
 
 export interface CandidateClickedEvent extends Event<(engineID: string, candidateID: number, button: string) => void> {}
 
-export interface KeyEventEvent extends Event<(engineID: string, keyData: KeyboardEvent) => void> {}
+export interface KeyEventEvent extends Event<(engineID: string, keyData: KeyboardEvent, requestId: string) => void> {}
 
 export interface DeactivatedEvent extends Event<(engineID: string) => void> {}
 

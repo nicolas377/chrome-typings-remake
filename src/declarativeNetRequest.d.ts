@@ -140,7 +140,7 @@ export interface RuleAction {
     type: RuleActionType;
 }
 
-export type RuleCondition = {
+export interface RuleCondition {
     /**
      * Specifies whether the network request is first-party or third-party to the domain from which it originated.
      * If omitted, all requests are accepted.
@@ -148,18 +148,18 @@ export type RuleCondition = {
     domainType?: DomainType | undefined;
 
     /**
-   * @deprecated since Chrome 101. Use initiatorDomains instead.
+     * @deprecated since Chrome 101. Use initiatorDomains instead.
 
-   * The rule will only match network requests originating from the list of domains.
-   * If the list is omitted, the rule is applied to requests from all domains.
-   * An empty list is not allowed.
-   *
-   * Notes:
-   * Sub-domains like "a.example.com" are also allowed.
-   * The entries must consist of only ascii characters.
-   * Use punycode encoding for internationalized domains.
-   * This matches against the request initiator and not the request url.
-   */
+     * The rule will only match network requests originating from the list of domains.
+     * If the list is omitted, the rule is applied to requests from all domains.
+     * An empty list is not allowed.
+     *
+     * Notes:
+     * Sub-domains like "a.example.com" are also allowed.
+     * The entries must consist of only ascii characters.
+     * Use punycode encoding for internationalized domains.
+     * This matches against the request initiator and not the request url.
+     */
     domains?: string[] | undefined;
 
     /**
@@ -306,26 +306,16 @@ export type RuleCondition = {
      * For example, when the request url is http://abc.рф?q=ф, the urlFilter will be matched against the url http://abc.xn--p1ai/?q=%D1%84.
      */
     urlFilter?: string | undefined;
-} & (
-    | {
-          /**
-           * List of resource types which the rule won't match.
-           * Only one of {@link RuleCondition.resourceTypes}
-           * and {@link RuleCondition.excludedResourceTypes} should be specified.
-           * If neither of them is specified, all resource types except "main_frame" are blocked.
-           */
-          excludedResourceTypes?: ResourceType[] | undefined;
-      }
-    | {
-          /**
-           * List of resource types which the rule can match.
-           * An empty list is not allowed.
-           *
-           * Note: this must be specified for allowAllRequests rules and may only include the sub_frame and main_frame resource types.
-           */
-          resourceTypes?: ResourceType[] | undefined;
-      }
-);
+
+    /**
+     * List of resource types which the rule can match.
+     * An empty list is not allowed.
+     *
+     * Note: this must be specified for allowAllRequests rules and may only include the sub_frame and main_frame resource types.
+     */
+    resourceTypes?: ResourceType[] | undefined;
+}
+
 export interface MatchedRule {
     /** A matching rule's ID. */
     ruleId: number;
@@ -429,11 +419,11 @@ export interface RegexOptions {
      */
     isCaseSensitive?: boolean | undefined;
 
-    /** The regular expresson to check. */
+    /** The regular expression to check. */
     regex: string;
 
     /** Whether the regex specified requires capturing.
-     * Capturing is only required for redirect rules which specify a regexSubstition action.
+     * Capturing is only required for redirect rules which specify a regexSubstitution action.
      * The default is false.
      */
     requireCapturing?: boolean | undefined;
@@ -501,6 +491,17 @@ export interface UpdateRuleOptions {
     removeRuleIds?: number[] | undefined;
 }
 
+export interface UpdateStaticRulesOptions {
+    /** Set of ids corresponding to rules in the Ruleset to disable. */
+    disableRuleIds?: number[];
+
+    /** Set of ids corresponding to rules in the Ruleset to enable. */
+    enableRuleIds?: number[];
+
+    /** The id corresponding to a static Ruleset. */
+    rulesetId: string;
+}
+
 export interface UpdateRulesetOptions {
     /** The set of ids corresponding to a static Ruleset that should be disabled. */
     disableRulesetIds?: string[] | undefined;
@@ -559,6 +560,8 @@ export function updateEnabledRulesets(options: UpdateRulesetOptions, callback: F
 export function updateEnabledRulesets(options: UpdateRulesetOptions): Promise<void>;
 export function updateSessionRules(options: UpdateRuleOptions, callback: Function): void;
 export function updateSessionRules(options: UpdateRuleOptions): Promise<void>;
+export function updateStaticRules(options: UpdateStaticRulesOptions): Promise<void>;
+export function updateStaticRules(options: UpdateStaticRulesOptions, callback?: () => void): void;
 export interface RuleMatchedDebugEvent extends Event<(info: MatchedRuleInfoDebug) => void> {}
 
 export var onRuleMatchedDebug: RuleMatchedDebugEvent;

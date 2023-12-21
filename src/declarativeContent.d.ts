@@ -40,7 +40,7 @@ export interface PageStateUrlDetails {
     /** Optional. Matches if the scheme of the URL is equal to any of the schemes specified in the array.  */
     schemes?: string[] | undefined;
     /** Optional. Matches if the port of the URL is contained in any of the specified port lists. For example [80, 443, [1000, 1200]] matches all requests on port 80, 443 and in the range 1000-1200.  */
-    ports?: (number | number[])[] | undefined;
+    ports?: Array<number | number[]> | undefined;
 }
 
 export class PageStateMatcherProperties {
@@ -51,7 +51,7 @@ export class PageStateMatcherProperties {
     /**
      * Optional.
      * Since Chrome 45. Warning: this is the current Beta channel. More information available on the API documentation pages.
-     * Matches if the bookmarked state of the page is equal to the specified value. Requres the bookmarks permission.
+     * Matches if the bookmarked state of the page is equal to the specified value. Requires the bookmarks permission.
      */
     isBookmarked?: boolean | undefined;
 }

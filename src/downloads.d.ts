@@ -222,6 +222,11 @@ export interface DownloadFilenameSuggestion {
     conflictAction?: string | undefined;
 }
 
+export interface UiOptions {
+    /** Enable or disable the download UI. */
+    enabled: boolean;
+}
+
 export interface DownloadChangedEvent extends Event<(downloadDelta: DownloadDelta) => void> {}
 
 export interface DownloadCreatedEvent extends Event<(downloadItem: DownloadItem) => void> {}
@@ -234,16 +239,16 @@ export interface DownloadDeterminingFilenameEvent
 export function search(query: DownloadQuery): Promise<DownloadItem[]>;
 export function search(query: DownloadQuery, callback: (results: DownloadItem[]) => void): void;
 export function pause(downloadId: number): Promise<void>;
-export function pause(downloadId: number, callback?: () => void): void;
+export function pause(downloadId: number, callback: () => void): void;
 export function getFileIcon(downloadId: number, options?: GetFileIconOptions): Promise<string>;
 export function getFileIcon(downloadId: number, callback: (iconURL: string) => void): void;
 export function getFileIcon(downloadId: number, options: GetFileIconOptions, callback: (iconURL: string) => void): void;
 export function resume(downloadId: number): Promise<void>;
-export function resume(downloadId: number, callback?: () => void): void;
+export function resume(downloadId: number, callback: () => void): void;
 export function cancel(downloadId: number): Promise<void>;
-export function cancel(downloadId: number, callback?: () => void): void;
+export function cancel(downloadId: number, callback: () => void): void;
 export function download(options: DownloadOptions): Promise<number>;
-export function download(options: DownloadOptions, callback?: (downloadId: number) => void): void;
+export function download(options: DownloadOptions, callback: (downloadId: number) => void): void;
 export function open(downloadId: number): void;
 export function show(downloadId: number): void;
 export function showDefaultFolder(): void;
@@ -255,6 +260,8 @@ export function acceptDanger(downloadId: number): Promise<void>;
 export function acceptDanger(downloadId: number, callback: () => void): void;
 export function drag(downloadId: number): void;
 export function setShelfEnabled(enabled: boolean): void;
+export function setUiOptions(options: UiOptions): Promise<void>;
+export function setUiOptions(options: UiOptions, callback: () => void): void;
 export var onChanged: DownloadChangedEvent;
 export var onCreated: DownloadCreatedEvent;
 export var onErased: DownloadErasedEvent;

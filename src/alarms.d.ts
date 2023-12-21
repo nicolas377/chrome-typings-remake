@@ -20,14 +20,17 @@ export interface Alarm {
 
 export interface AlarmEvent extends Event<(alarm: Alarm) => void> {}
 
-export function create(alarmInfo: AlarmCreateInfo): void;
-export function create(name: string, alarmInfo: AlarmCreateInfo): void;
+export function create(alarmInfo: AlarmCreateInfo): Promise<void>;
+export function create(name: string, alarmInfo: AlarmCreateInfo): Promise<void>;
+export function create(alarmInfo: AlarmCreateInfo, callback: () => void): void;
+export function create(name: string, alarmInfo: AlarmCreateInfo, callback: () => void): void;
 export function getAll(callback: (alarms: Alarm[]) => void): void;
 export function getAll(): Promise<Alarm[]>;
 export function clearAll(): Promise<boolean>;
-export function clearAll(callback?: (wasCleared: boolean) => void): void;
+export function clearAll(callback: (wasCleared: boolean) => void): void;
 export function clear(name?: string): Promise<boolean>;
-export function clear(name?: string, callback?: (wasCleared: boolean) => void): void;
+export function clear(callback: (wasCleared: boolean) => void): void;
+export function clear(name: string, callback: (wasCleared: boolean) => void): void;
 export function clear(callback: (wasCleared: boolean) => void): void;
 export function clear(): Promise<void>;
 export function get(callback: (alarm: Alarm) => void): void;

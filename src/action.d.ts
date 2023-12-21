@@ -1,7 +1,9 @@
 import { Event } from './events';
 import { Tab } from './tabs';
 
-export interface BadgeBackgroundColorDetails {
+export interface BadgeBackgroundColorDetails extends BadgeColorDetails {}
+
+export interface BadgeColorDetails {
     /** An array of four integers in the range [0,255] that make up the RGBA color of the badge. For example, opaque red is [255, 0, 0, 255]. Can also be a string with a CSS value, with opaque red being #FF0000 or #F00. */
     color: string | ColorArray;
     /** Optional. Limits the change to when a particular tab is selected. Automatically resets when the tab is closed.  */
@@ -41,6 +43,11 @@ export interface TabIconDetails {
     imageData?: ImageData | { [index: number]: ImageData } | undefined;
 }
 
+export interface OpenPopupOptions {
+    /** Optional. The id of the window to open the action popup in. Defaults to the currently-active window if unspecified.  */
+    windowId?: number | undefined;
+}
+
 export interface TabDetails {
     /** Optional. The ID of the tab to query state for. If no tab is specified, the non-tab-specific state is returned.  */
     tabId?: number | undefined;
@@ -52,26 +59,38 @@ export interface UserSettings {
 }
 
 export function disable(tabId?: number): Promise<void>;
-export function disable(tabId?: number, callback?: () => void): void;
+export function disable(callback: () => void): void;
+export function disable(tabId: number, callback: () => void): void;
 export function enable(tabId?: number): Promise<void>;
-export function enable(tabId?: number, callback?: () => void): void;
+export function enable(callback: () => void): void;
+export function enable(tabId: number, callback: () => void): void;
 export function getBadgeBackgroundColor(details: TabDetails, callback: (result: ColorArray) => void): void;
 export function getBadgeBackgroundColor(details: TabDetails): Promise<ColorArray>;
 export function getBadgeText(details: TabDetails, callback: (result: string) => void): void;
 export function getBadgeText(details: TabDetails): Promise<string>;
+export function getBadgeTextColor(details: TabDetails, callback: (result: ColorArray) => void): void;
+export function getBadgeTextColor(details: TabDetails): Promise<ColorArray>;
 export function getPopup(details: TabDetails, callback: (result: string) => void): void;
 export function getPopup(details: TabDetails): Promise<string>;
 export function getTitle(details: TabDetails, callback: (result: string) => void): void;
 export function getTitle(details: TabDetails): Promise<string>;
 export function getUserSettings(callback: (userSettings: UserSettings) => void): void;
 export function getUserSettings(): Promise<UserSettings>;
-export function setBadgeBackgroundColor(details: BadgeBackgroundColorDetails): Promise<void>;
-export function setBadgeBackgroundColor(details: BadgeBackgroundColorDetails, callback?: () => void): void;
+export function isEnabled(tabId: number | undefined, callback: (isEnabled: boolean) => void): void;
+export function isEnabled(tabId?: number): Promise<boolean>;
+export function openPopup(options?: OpenPopupOptions): Promise<void>;
+export function openPopup(callback: () => void): void;
+export function openPopup(options: OpenPopupOptions, callback: () => void): void;
+export function setBadgeBackgroundColor(details: BadgeColorDetails): Promise<void>;
+export function setBadgeBackgroundColor(details: BadgeColorDetails, callback: () => void): void;
 export function setBadgeText(details: BadgeTextDetails): Promise<void>;
-export function setBadgeText(details: BadgeTextDetails, callback?: () => void): void;
-export function setIcon(details: TabIconDetails, callback?: () => void): void;
+export function setBadgeText(details: BadgeTextDetails, callback: () => void): void;
+export function setBadgeTextColor(details: BadgeColorDetails): Promise<void>;
+export function setBadgeTextColor(details: BadgeColorDetails, callback: () => void): void;
+export function setIcon(details: TabIconDetails): Promise<void>;
+export function setIcon(details: TabIconDetails, callback: () => void): void;
 export function setPopup(details: PopupDetails): Promise<void>;
-export function setPopup(details: PopupDetails, callback?: () => void): void;
+export function setPopup(details: PopupDetails, callback: () => void): void;
 export function setTitle(details: TitleDetails): Promise<void>;
-export function setTitle(details: TitleDetails, callback?: () => void): void;
+export function setTitle(details: TitleDetails, callback: () => void): void;
 export var onClicked: BrowserClickedEvent;
