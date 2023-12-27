@@ -1,11 +1,19 @@
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
-import { join as joinPaths } from 'node:path';
+import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join as joinPaths } from 'node:path';
 import { ModuleDeclaration, Project, SourceFile } from 'ts-morph';
 import { SyntaxKind } from 'typescript';
 
 // TODO: is this a ref or a unique string?
 const homeDir = joinPaths(__dirname, '..');
 const srcDir = joinPaths(homeDir, 'src');
+
+function writeFile(path: string, content: string): void {
+    if (!existsSync(dirname(path))) {
+        mkdirSync(srcDir);
+    }
+
+    writeFileSync(path, content, 'utf-8');
+}
 
 export function transform(): void {
     // clear old src dir
@@ -15,27 +23,24 @@ export function transform(): void {
     // access the monofile from here
     const monoFile = morphProject.addSourceFileAtPath(joinPaths(homeDir, 'old.d.ts'));
 
-    const namespaces = findNamespacesInMonoFile(monoFile);
+    // TODO: if this is only used once, just create and then iterate
+    const namespacesLinkMap = createNamespaceLinkMap(monoFile);
 
-    console.log(namespaces);
+    namespacesLinkMap.forEach((declaration, name) => {
+        // find refs to other chrome apis, and make them imports
+        // create file name
+        // copy paste in namespace content
+    });
 
-    // writing an example file for now
-    mkdirSync(srcDir);
-    writeFileSync(joinPaths(srcDir, 'index.txt'), 'hi', 'utf-8');
-
-    // create namespaces [foo, [foo, bar], x]
-    function findNamespacesInMonoFile(monoFile: SourceFile): (string | string[])[] {
-        const namespaces: (string | string[])[] = [];
+    // create namespaces [foo, foo/bar, x], linked to their declarations
+    function createNamespaceLinkMap(monoFile: SourceFile): Map<string, ModuleDeclaration> {
+        const namespaces = new Map<string, ModuleDeclaration>();
 
         // gets all the names of the namespaces into one array ([chrome.foo, chrome.foo.bar]), then starts a loop over it
-        (
-            monoFile
-                .getStatements()
-                // the type narrowing from node.isKind doesn't play nicely with .filter(), so this is safe
-                .filter(node => node.isKind(SyntaxKind.ModuleDeclaration)) as ModuleDeclaration[]
-        )
-            .map(statement => statement.getName())
-            .forEach(name => {
+        monoFile
+            .getModules()
+            .map(statement => [statement, statement.getName()] as const)
+            .forEach(([statement, name]) => {
                 name.split('.').forEach((part, i, arr) => {
                     // ignore the "chrome" section
                     if (i === 0) return;
@@ -43,15 +48,15 @@ export function transform(): void {
                         // dealing with chrome.foo.bar
                         if (i == 1) {
                             // check if "foo" exists, if not, add it
-                            if (namespaces.includes(part)) return;
-                            else namespaces.push(part);
+                            if (namespaces.has(part)) return;
+                            else namespaces.set(part, statement);
                         } else {
                             // we're in the bar section
-                            namespaces.push(`${arr[1]}/${part}`);
+                            namespaces.set(`${arr[1]}/${part}`, statement);
                         }
                     }
                     // dealing with chrome.foo
-                    else namespaces.push(part);
+                    else namespaces.set(part, statement);
                 });
             });
 
