@@ -1,5 +1,5 @@
-require('ts-node').register();
+require("ts-node").register();
 
-const transformer = require('./transformer/index');
+const transformer = require("./src/index");
 
-transformer.transform();
+transformer.start();
