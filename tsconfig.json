@@ -1,16 +1,21 @@
 {
   "compilerOptions": {
+    // Module/output settings
     "target": "es2024",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 
+    // Typecheck settings
     "strict": true,
     "useUnknownInCatchVariables": true,
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
-    "noPropertyAccessFromIndexSignature": true
+    "noPropertyAccessFromIndexSignature": true,
+
+    // Since tsc doesn't feel like picking up on the types
+    "types": ["node"]
   },
-  "include": ["src"]
+  "exclude": ["old.d.ts"]
 }

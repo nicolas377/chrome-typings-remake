@@ -13,7 +13,7 @@ It's hard to express this. That's a **lot** of code.
 
 Such a large file presents a couple issues.
 
-First off, it can simply be a hard file to open. 15K lines of documentating every nook and cranny of the Chrome API will take its toll on a poor laptop that's already having its RAM eaten by 3 electron applications, especially when your editor try to give you pretty syntax highlighting and nice intellisense over the entire behemoth of a file.
+First off, it can simply be a hard file to open. 15K lines of documentating every nook and cranny of the Chrome API will take its toll on a poor laptop that's already having its RAM eaten by 3 electron applications, especially when your editor tries to give you pretty syntax highlighting and nice intellisense over the entire behemoth of a file.
 
 It can be also be nightmare to maintain. For example, try scrolling through to find `chrome.tabs.Tab`, a core part of the types. You'll be scrolling for a while, as it sits about 11 thousand lines down.
 
@@ -32,10 +32,9 @@ So no guarentees on when this is going to be done. I'll try and keep this sectio
 ## Repo layout
 
 ```text
-├── run.js             # Technically the entrypoint. Sets up ts-node.
 ├── src
-│   ├── README.md      # Contains more details about the implementation/layout.
-│   └── index.ts       # The start() function is the entrypoint.
+│   ├── README.md      # Contains more details about the implementation and its layout.
+│   └── start.ts       # The entrypoint of the script.
 ├── old.d.ts           # Monofile-style chrome defs. Gitignored.
 ├── eslint.config.mjs  # Global eslint configuration.
 ├── tsconfig.json      # Global tsc configuration
