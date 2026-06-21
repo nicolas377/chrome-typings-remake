@@ -1,3 +1,6 @@
+# The old monofile defs
+old.d.ts
+
 # Logs
 logs
 *.log
