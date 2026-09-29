@@ -5,7 +5,7 @@ const enum LogLevel {
   Info,
   Warn,
   Error,
-  Fatal
+  Fatal,
 }
 
 const logLevelStrings: Record<LogLevel, string> = {
@@ -14,7 +14,7 @@ const logLevelStrings: Record<LogLevel, string> = {
   [LogLevel.Info]: "INFO",
   [LogLevel.Warn]: "WARN",
   [LogLevel.Error]: "ERROR",
-  [LogLevel.Fatal]: "FATAL"
+  [LogLevel.Fatal]: "FATAL",
 };
 
 const minLoggingLevel: LogLevel = LogLevel.Trace;
