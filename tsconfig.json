@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "rootDir": "./", // starting tsc v7 compatibility
 
     // Typecheck settings
     "strict": true,
@@ -13,8 +14,8 @@
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
+    "stableTypeOrdering": true,
 
-    // Since tsc doesn't feel like picking up on the types
     "types": ["node"]
   },
   "exclude": ["old.d.ts"]

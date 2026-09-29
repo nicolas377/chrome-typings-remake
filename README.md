@@ -29,6 +29,11 @@ As a bit of a life lesson to any young programmer out there that's somehow read 
 
 So no guarentees on when this is going to be done. I'll try and keep this section updated (within reason) as things happen, but right now I'm really just brainstorming out how this project will actually work.
 
+### Upstream todos
+
+- [ ] Move `SetRequired` into notifications and `SetPartial` into webRequest
+- [ ] Outdated ref into filesystem, `DirectoryEntry` -> `FileSystemDirectoryEntry`
+
 ## Repo layout
 
 ```text
