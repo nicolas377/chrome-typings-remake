@@ -16,6 +16,7 @@ export function start() {
     joinPaths(repoDir, "old.d.ts"),
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   while (true) {
     const target = monoFile
       .getDescendantsOfKind(SyntaxKind.TypeReference)

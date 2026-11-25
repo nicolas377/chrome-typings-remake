@@ -2,6 +2,9 @@
 
 A transformer to modularize the Chrome typings.
 
+<a href="https://brainmade.org/"><img src="https://brainmade.org/black-logo.png" alt="The Brainmade logo" height="35"></a>
+<a href="https://0rwx.com/"><img src="https://0rwx.com/static/AI-R-light.svg" alt="The AI:R logo" height="35"></a>
+
 ## Why
 
 I've been helping maintain [`@types/chrome`](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chrome) (part of the DefinitelyTyped universe) for about 5 years now.
@@ -31,8 +34,9 @@ So no guarentees on when this is going to be done. I'll try and keep this sectio
 
 ### Upstream todos
 
+- [ ] Figure out how to uniformly reference other parts of the larger namespace (e.x. `chrome.events.Event` or `events.Event`?)
 - [ ] Move `SetRequired` into notifications and `SetPartial` into webRequest
-- [ ] Outdated ref into filesystem, `DirectoryEntry` -> `FileSystemDirectoryEntry`
+- [x] Outdated ref into filesystem, `DirectoryEntry` -> `FileSystemDirectoryEntry` (#75770, thanks Erwan!)
 
 ## Repo layout
 
@@ -41,7 +45,7 @@ So no guarentees on when this is going to be done. I'll try and keep this sectio
 │   ├── README.md      # Contains more details about the implementation and its layout.
 │   └── start.ts       # The entrypoint of the script.
 ├── old.d.ts           # Monofile-style chrome defs. Gitignored.
-├── eslint.config.mjs  # Global eslint configuration.
+├── eslint.config.ts   # Global eslint configuration.
 ├── tsconfig.json      # Global tsc configuration
 ├── package-lock.json  # NPM-style package-lock.json
 ├── package.json       # NPM-style package.json
